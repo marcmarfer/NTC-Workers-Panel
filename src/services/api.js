@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://neumatrans.marcmarques.com/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://neumatrans.marcmarques.com/api',
   timeout: 5000,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 api.interceptors.request.use(config => {
@@ -13,4 +17,4 @@ api.interceptors.request.use(config => {
   return config;
 });
 
-export default api;
+export default api; 
