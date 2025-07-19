@@ -23,7 +23,7 @@ jobs:
 
       - name: Create .env for build
         run: |
-          echo "VITE_API_URL=${{ secrets.PROD_API_URL }}" >> .env
+          echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> .env
 
       - name: Build assets
         run: npx vite build --mode prod
