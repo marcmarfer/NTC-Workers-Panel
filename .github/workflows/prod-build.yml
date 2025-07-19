@@ -1,0 +1,57 @@
+name: laravel-prod-build
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Create .env for build
+        run: |
+          echo "VITE_API_URL=${{ secrets.PROD_API_URL }}" >> .env
+
+      - name: Build assets
+        run: npx vite build --mode prod
+
+      - name: Archive dist folder
+        run: tar -czf app.tgz dist
+
+      - name: SSH SCP and deployment for prod
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          source: "app.tgz"
+          target: ${{ secrets.PROD_SSH_DIR }}
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          password: ${{ secrets.PROD_SSH_PASSWORD }}
+          port: ${{ secrets.PROD_SSH_PORT }}
+          script: |
+            cd ${{ secrets.PROD_SSH_DIR }}
+            tar -xzf app.tgz
+            mv dist/* ./
+            rm -rf dist app.tgz
+            chown -R www-data:www-data ./
+            chmod -R 755 ./
