@@ -51,7 +51,7 @@ jobs:
           script: |
             cd ${{ secrets.PROD_SSH_DIR }}
             tar -xzf app.tgz
-            mv dist/* ./
+            cp -r dist/* ./
             rm -rf dist app.tgz
             chown -R www-data:www-data ./
             chmod -R 755 ./
