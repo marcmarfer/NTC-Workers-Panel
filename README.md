@@ -1,16 +1,16 @@
 # NTC Workers Panel
 
-`NTC-Workers-Panel` es una aplicación web desarrollada para los trabajadores del taller NTC.  
-Su propósito es conectar con el backend principal (`NTC-Dashboard`) para que los trabajadores puedan gestionar en tiempo real las órdenes de reparación de vehículos.
+`NTC-Workers-Panel` is a web application developed for the workers at NTC workshop.  
+Its purpose is to connect with the main backend system (`NTC-Dashboard`) so that staff can manage vehicle repair orders in real time.
 
-La aplicación permite a los operarios:
+The application allows workers to:
 
-- Visualizar las órdenes de reparación activas asignadas.
-- Cambiar de forma sencilla el estado de cada reparación (en recepción, diagnóstico, en reparación, finalizado).
-- Mantener actualizado el seguimiento del cliente, ya que cada cambio de estado actualiza la información y envía correos automáticos de seguimiento.
-- Notificar al cliente cuando su vehículo está listo para ser recogido.
+- View active repair orders assigned to them.
+- Easily update the status of each repair (in reception, diagnosing, under repair, completed).
+- Keep the customer’s progress updated, as each status change updates the information and triggers automatic follow-up emails.
+- Notify the customer when their vehicle is ready for pickup.
 
-La app está construida con Vue 3 + Vite, usa **axios** para la comunicación con el backend mediante API REST y está desplegada en un VPS propio.  
-El acceso está protegido por login, validando al usuario único de integración mediante **JWT** gestionado en el backend.
+The app is built with Vue 3 + Vite, uses **axios** to communicate with the backend via a REST API, and is deployed on a dedicated VPS.  
+Access is protected by login, validating a unique integration user through **JWT** handled by the backend.
 
-En resumen, `NTC-Workers-Panel` es la interfaz operativa que simplifica el trabajo en taller, agiliza las actualizaciones internas y mantiene informados a los clientes durante todo el proceso de reparación.
+In summary, `NTC-Workers-Panel` is the operational interface that streamlines workshop tasks, speeds up internal updates, and keeps customers informed throughout the entire repair process.
