@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
   data: {
@@ -16,7 +16,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["delete", "edit", "complete", "resend"]);
+const emit = defineEmits(["row-click"]);
 
 const currentPage = ref(1);
 
@@ -84,22 +84,6 @@ const goToPage = (page) => {
     currentPage.value = page;
   }
 };
-
-const handleDelete = (item) => {
-  emit("delete", item);
-};
-
-const handleEdit = (item) => {
-  emit("edit", item);
-};
-
-const handleComplete = (item) => {
-  emit("complete", item);
-};
-
-const handleResend = (item) => {
-  emit("resend", item);
-};
 </script>
 
 <template>
@@ -118,14 +102,15 @@ const handleResend = (item) => {
       </thead>
       <tbody class="bg-white">
         <tr
+          @click="emit('row-click', item)"
           v-for="item in getPaginatedData()"
           :key="item.id"
-          class="hover:bg-gray-50 border-b border-gray-200"
+          class="cursor-pointer hover:bg-gray-50 border-b border-gray-200"
         >
           <td
             v-for="column in columns"
             :key="column.key"
-            class="px-4 py-3 whitespace-nowrap text-sm text-gray-900"
+            class="px-6 py-3 whitespace-nowrap text-sm text-gray-900"
           >
             {{
               column.formatter

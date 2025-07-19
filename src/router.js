@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '@/pages/Login.vue';
 import Orders from '@/pages/Orders.vue';
+import OrderSteps from '@/pages/OrderSteps.vue';
 
 const routes = [
   { path: '/login', name: 'login', component: Login },
   { path: '/orders', name: 'orders', component: Orders, meta: { requiresAuth: true } },
+  { path: '/orders/:id', name: 'order-steps', component: OrderSteps, meta: { requiresAuth: true } },
   { path: '/:pathMatch(.*)*', redirect: '/login' },
 ];
 

@@ -6,6 +6,15 @@ import OrdersTable from '@/components/OrdersTable.vue';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const router = useRouter();
+const statusMap = {
+  reception: 'En recepción',
+  diagnosing: 'Diagnóstico',
+  in_repair: 'En reparación',
+  finished: 'Finalizado',
+};
+const goToOrder = (order) => {
+  router.push({ name: 'order-steps', params: { id: order.id } });
+};
 
 const logout = () => {
   localStorage.removeItem('token');
@@ -22,12 +31,12 @@ function filteredOrders() {
 }
 
 const columns = [
-  { key: 'id', label: 'ID'},
-  { key: 'client.name',                      label: 'Cliente'  },
-  { key: 'repairs.0.vehicle.brand.name',     label: 'Marca'    },
-  { key: 'repairs.0.vehicle.model.name',     label: 'Modelo'   },
-  { key: 'repairs.0.vehicle.plate_number',   label: 'Matrícula'},
-  { key: 'status', label: 'Estado'},
+  { key: 'id', label: 'ID' },
+  { key: 'client.name', label: 'Cliente' },
+  { key: 'repairs.0.vehicle.brand.name', label: 'Marca' },
+  { key: 'repairs.0.vehicle.model.name', label: 'Modelo' },
+  { key: 'repairs.0.vehicle.plate_number', label: 'Matrícula' },
+  { key: 'status', label: 'Estado', formatter: (value) => statusMap[value] || value },
 ];
 
 onMounted(async () => {
@@ -57,6 +66,7 @@ onMounted(async () => {
           :data="filteredOrders()"
           :columns="columns"
           :items-per-page="10"
+          @row-click="goToOrder"
         />
       </div>
     </div>
